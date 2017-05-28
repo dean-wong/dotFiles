@@ -1,0 +1,6 @@
+--exclude=.git
+--exclude=.svn
+--exclude=.hg
+--exclude=log/*
+--exclude=tmp/*
+--exclude=node_modules/*
