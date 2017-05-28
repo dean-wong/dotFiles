@@ -46,7 +46,6 @@ Plugin 'tpope/vim-surround'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'vim-latex/vim-latex'
 Plugin 'vim-syntastic/syntastic'
-" Plugin 'w0rp/ale'
 " plugin from http://vim-scripts.org/vim/scripts.html
 " Plugin 'L9'
 " Git plugin not hosted on GitHub
@@ -443,7 +442,7 @@ noremap <silent><F5> :!open %<CR>
 noremap <silent><F8> :Autoformat<CR>
 
 "用F9 进行语法检查
-noremap <silent><F9> :ALELint<CR>
+noremap <silent><F9> :SyntasticCheck<CR>
 
 " 专注模式
 noremap <silent><F11> :Goyo<CR>
