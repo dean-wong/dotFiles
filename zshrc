@@ -1,5 +1,5 @@
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/dean/.oh-my-zsh
+export ZSH=$HOME/.oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -100,10 +100,7 @@ alias tree="tree -CN --du -h"
 alias svn_type2txt="svn propset svn:mime-type text/plain"
 
 # 使用有色彩的，左右对比的diff工具
-alias diff="icdiff"
-
-# 同时进行四个任务，加快编译速度
-alias make="make -j4"
+alias diff="colordiff"
 
 # autojump
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
