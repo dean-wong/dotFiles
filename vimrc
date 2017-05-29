@@ -23,7 +23,9 @@ Plugin 'Shougo/unite.vim'
 Plugin 'Shougo/vimproc.vim'
 Plugin 'Shougo/vimshell.vim'
 Plugin 'Valloric/ListToggle'
-Plugin 'Valloric/YouCompleteMe'
+if v:version > 705
+    Plugin 'Valloric/YouCompleteMe'
+endif
 Plugin 'Yggdroot/indentLine'
 Plugin 'bling/vim-airline'
 Plugin 'ctrlpvim/ctrlp.vim'
@@ -203,11 +205,15 @@ else
     if exists('$TMUX')
         set ttymouse=xterm2
         let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
-        let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
+        if v:version > 705
+            let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
+        endif
         let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
     else
         let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-        let &t_SR = "\<Esc>]50;CursorShape=2\x7"
+        if v:version > 705
+            let &t_SR = "\<Esc>]50;CursorShape=2\x7"
+        endif
         let &t_EI = "\<Esc>]50;CursorShape=0\x7"
     endif
 
