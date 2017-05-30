@@ -325,7 +325,7 @@ vmap <silent><Leader>a: :Tabularize /:\zs<CR>
 "  ListToggle
 "
 let g:lt_location_list_toggle_map = '<leader>l'
-let g:lt_quickfix_list_toggle_map = '<leader>x'
+let g:lt_quickfix_list_toggle_map = '<leader>q'
 
 " ------------------------------------------------------------------
 "  Goyo
@@ -391,8 +391,8 @@ let g:syntastic_check_on_wq = 0
 " 自定义键盘映射
 " Fast saving
 nnoremap <silent><leader>w :w<CR>
-nnoremap <silent><leader>z :bd<CR>
-nnoremap <silent><leader>q :qa<CR>
+nnoremap <silent><leader>x :bd<CR>
+nnoremap <silent><leader>z :qa<CR>
 
 " Copy and Paste
 nnoremap <silent><leader>c "+Y
