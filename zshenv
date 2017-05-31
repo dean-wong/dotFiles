@@ -6,11 +6,15 @@ export PATH="$PATH:/usr/local/opt/opencv3/bin"
 export ANDROID_HOME=$HOME/android-sdk-macosx
 
 # pkg-config 的设置，一部分安装程序不会添加到pkg-config中，需要手动添加路径
-export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/opt/sqlite/lib/pkgconfig
-export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/opt/openssl/lib/pkgconfig
-export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/opt/opencv3/lib/pkgconfig
+export PKG_CONFIG_PATH=""
 export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/opt/libffi/lib/pkgconfig
+export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/opt/opencv3/lib/pkgconfig
+export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/opt/openssl/lib/pkgconfig
+export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/opt/sqlite/lib/pkgconfig
+export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig:/usr/lib/pkgconfig
 
+# 默认没有UTF-8
+export LANG=zh_CN.UTF-8
 
 #快速进入工作目录
 export WORKSPACE=$HOME/Documents/workspace

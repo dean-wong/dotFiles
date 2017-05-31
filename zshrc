@@ -60,7 +60,7 @@ source $HOME/.zprofile
 source $ZSH/oh-my-zsh.sh
 
 # You may need to manually set your language environment
-export LANG=zh_CN.UTF-8
+# export LANG=zh_CN.UTF-8
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
@@ -85,9 +85,10 @@ fi
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 #
 
-export ELECTRON_MIRROR="https://npm.taobao.org/mirrors/electron/"
-alias cnpm="npm --registry=https://registry.npm.taobao.org --cache=$HOME/.npm/.cache/cnpm --disturl=https://npm.taobao.org/dist --userconfig=$HOME/.cnpmrc"
-# alias cnpm="npm --registry=https://r.cnpmjs.org --cache=$HOME/.npm/.cache/cnpm --disturl=https://npm.taobao.org/dist --userconfig=$HOME/.cnpmrc"
+# npm 淘宝镜像
+alias cnpm="export ELECTRON_MIRROR='https://npm.taobao.org/mirrors/electron/'; \
+    npm --registry=https://registry.npm.taobao.org \
+    --cache=$HOME/.npm/.cache/cnpm --disturl=https://npm.taobao.org/dist --userconfig=$HOME/.cnpmrc"
 
 # egrep 显示色彩
 alias egrep="egrep --color=auto --exclude-dir={.bzr,CSV,.git,.hg,.svn}"
