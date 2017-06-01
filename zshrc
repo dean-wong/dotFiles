@@ -98,7 +98,7 @@ alias egrep="egrep --color=auto --exclude-dir={.bzr,CSV,.git,.hg,.svn}"
 alias tree="tree -CN --du -h"
 
 # 设置几个常用程序的命令行快捷启动方式
-alias svn_type2txt="svn propset svn:mime-type text/plain"
+alias svn-type2txt="svn propset svn:mime-type text/plain"
 
 # 使用有色彩的，左右对比的diff工具
 alias diff="colordiff"
