@@ -247,17 +247,26 @@ let g:signify_sign_change            = '≠'
 
 " ------------------------------------------------------------------
 " 设置目录树参数
-let g:NERDTreeWinPos     = "left"
-let g:NERDTreeWinSize    = 31
+" Netrw {
+let g:netrw_liststyle    = 3
+let g:netrw_banner       = 0
 let g:netrw_alto         = 1
 let g:netrw_altv         = 1 "置位此变量后，分割后的新窗口出现在右方而不是左
 let g:netrw_browse_split = 2 " 浏览时，这样打开文件: 先垂直分割窗口
+let g:netrw_winsize      = 25
+" }
+
+" NERDTree {
+let g:NERDTreeWinPos     = "left"
+let g:NERDTreeWinSize    = 31
+" }
 
 " ------------------------------------------------------------------
-" NERD_commenter      注释处理插件
-"
+" NERD_commenter {
+" 注释处理插件
 let NERDSpaceDelims       = 1                        " 自动添加前置空格
 let NERDRemoveExtraSpaces = 1
+" }
 
 " ------------------------------------------------------------------
 " CtrlP
@@ -486,7 +495,7 @@ endfunction
 
 function! s:PreviewDotFile()
     " 预览当前打开的dot graphic文件
-    exe "!dot % -Tpdf -O; pdfreader %.pdf; rm %.pdf"
+    exe "!dot % -Tpdf -o /tmp/%:t.pdf; picview /tmp/%:t.pdf; rm /tmp/%:t.pdf"
 endfunction
 com! PreviewDotFile call s:PreviewDotFile()
 
