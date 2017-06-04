@@ -16,6 +16,7 @@ Plugin 'VundleVim/Vundle.vim'
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
 Plugin 'Chiel92/vim-autoformat'
+Plugin 'dean-wong/YCM-Generator'
 Plugin 'Shougo/neomru.vim'
 Plugin 'Shougo/neoyank.vim'
 Plugin 'Shougo/unite-outline'
@@ -377,8 +378,6 @@ autocmd! User GoyoLeave nested call <SID>goyo_leave()
 let g:ycm_python_binary_path = '/usr/local/bin/python3'
 let g:ycm_global_ycm_extra_conf = '~/.vim/plugin/global_ycm_extra_conf.py'
 let g:ycm_confirm_extra_conf = 0 "关闭加载.ycm_extra_conf.py提示
-let g:ycm_error_symbol = '✘'
-let g:ycm_warning_symbol = '⚠︎'
 let g:ycm_collect_identifiers_from_tags_files = 1
 let g:ycm_autoclose_preview_window_after_insertion = 1
 
@@ -391,9 +390,17 @@ set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
 let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
+let g:syntastic_auto_loc_list = 2
 let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+let g:syntastic_check_on_wq = 1
+
+let g:syntastic_python_checkers = ['flake8']
+let g:syntastic_python_flake8_quiet_messages = {
+    \ "type":  "style",
+    \ "regex": '\m\[E50\d\d\]' }
+
+let g:syntastic_javascript_checkers = ['eslint']
+
 " }
 
 " ------------------------------------------------------------------
