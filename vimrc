@@ -16,7 +16,6 @@ Plugin 'VundleVim/Vundle.vim'
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
 Plugin 'Chiel92/vim-autoformat'
-Plugin 'dean-wong/YCM-Generator'
 Plugin 'Shougo/neomru.vim'
 Plugin 'Shougo/neoyank.vim'
 Plugin 'Shougo/unite-outline'
@@ -30,6 +29,7 @@ endif
 Plugin 'Yggdroot/indentLine'
 Plugin 'bling/vim-airline'
 Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'dean-wong/YCM-Generator'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'fatih/vim-go'
 Plugin 'flazz/vim-colorschemes'
@@ -37,6 +37,8 @@ Plugin 'godlygeek/tabular'
 Plugin 'junegunn/goyo.vim'
 Plugin 'keith/swift.vim'
 Plugin 'kshenoy/vim-signature'
+Plugin 'majutsushi/tagbar'
+Plugin 'mattn/emmet-vim'
 Plugin 'mhinz/vim-signify'
 Plugin 'moll/vim-node'
 Plugin 'morhetz/gruvbox'
@@ -80,8 +82,8 @@ filetype plugin indent on    " required
 " ------------------------------------------------------------------
 " 基础配置
 set nocompatible nobackup autoread nowritebackup noswapfile hidden
-set tabstop=4 softtabstop=4 shiftwidth=4 expandtab
-set number showcmd ruler showmode showmatch cursorline "relativenumber
+set tabstop=4 softtabstop=4 shiftwidth=4 "expandtab
+set number showcmd ruler showmode showmatch cursorline
 set incsearch hlsearch ignorecase smartcase
 set autoindent smartindent
 
@@ -198,7 +200,7 @@ if has("gui_running")
     "autocmd! InsertLeave * set   imdisable
     "autocmd! InsertEnter * set noimdisable
 
-    :SetNormalFont
+    :SetPixmapFont
 else
     colorscheme desertink
 
@@ -241,6 +243,11 @@ vmap <leader><leader> <Plug>(easymotion-prefix)
 " map ;; <Plug>(easymotion-prefix)
 
 " ------------------------------------------------------------------
+" Emmet {
+  let g:user_emmet_leader_key = '<leader>e'
+" }
+
+" ------------------------------------------------------------------
 "  Signify
 "
 let g:signify_sign_delete            = '✗'
@@ -270,17 +277,18 @@ let NERDRemoveExtraSpaces = 1
 " }
 
 " ------------------------------------------------------------------
-" CtrlP
+" CtrlP {
 "
-" nnoremap <silent><leader>r :<C-u>CtrlPBuffer<cr>
+nnoremap <silent><leader>t :<C-u>CtrlPBufTag<cr>
 let g:ctrlp_custom_ignore = {
     \ 'dir':  '\v[\/]\.(git|hg|svn)$',
-    \ 'file': '\v\.(exe|so|dylib)$',
+    \ 'file': '\v\.(pyc|a|o|so|dylib)$',
     \ 'link': 'SOME_BAD_SYMBOLIC_LINKS',
     \ }
 " let g:ctrlp_match_window = 'top,order:btt,min:1,max:10,results:20' " order:ttb 查找文件光标从上到下 order:btt 从下到上
 " let g:ctrlp_use_migemo = 1
-let g:ctrlp_regexp = 1
+" let g:ctrlp_regexp = 1
+" }
 
 " ------------------------------------------------------------------
 " Unite
@@ -288,10 +296,11 @@ let g:ctrlp_regexp = 1
 let g:unite_source_history_yank_enable     = 1
 let g:unite_kind_file_preview_max_filesize = 50000
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
-nnoremap <silent><leader>r :<C-u>Unite -buffer-name=Buffer -winheight=10 -start-insert buffer bookmark file_mru file<cr>
-nnoremap <silent><leader>t :<C-u>Unite -buffer-name=Outline -winwidth=35 -vertical -direction=botright -no-quit -toggle outline<cr>
-nnoremap <silent><leader>m :<C-u>Unite -buffer-name=Jump -winheight=15 -vertical-preview -auto-preview jump<cr>
-nnoremap <silent><leader>v :<C-u>Unite -buffer-name=Register -winheight=15 register history/yank<cr>
+nnoremap <silent><leader>r :<C-u>Unite -buffer-name=Buffer -winheight=10 -start-insert -direction=botright buffer bookmark file_mru file<cr>
+" Outline 不好使，还是用Tagbar
+" nnoremap <silent><leader>o :<C-u>Unite -buffer-name=Outline -winwidth=35 -vertical -direction=botright -no-quit -toggle outline<cr>
+nnoremap <silent><leader>m :<C-u>Unite -buffer-name=Jump -winheight=10 -vertical-preview -auto-preview -direction=botright jump<cr>
+nnoremap <silent><leader>v :<C-u>Unite -buffer-name=Register -winheight=10 -multi-line -direction=botright register history/yank<cr>
 
 " Custom mappings for the unite buffer
 autocmd FileType unite call s:unite_settings()
@@ -317,6 +326,25 @@ endfunction
 " let g:vim_markdown_frontmatter             = 1
 " let g:vim_markdown_toml_frontmatter        = 1
 " let g:vim_markdown_json_frontmatter        = 1
+
+" ------------------------------------------------------------------
+"  Tagbar {
+"
+let g:tagbar_type_markdown = {
+			\ 'ctagstype': 'markdown',
+			\ 'ctagsbin' : '~/.vim/plugin/markdown2ctags.py',
+			\ 'ctagsargs' : '-f - --sort=yes',
+			\ 'kinds' : [
+			\ 's:sections',
+			\ 'i:images'
+			\ ],
+			\ 'sro' : '|',
+			\ 'kind2scope' : {
+			\ 's' : 'section',
+			\ },
+			\ 'sort': 0,
+			\ }
+"  }
 
 " ------------------------------------------------------------------
 "  Tabularize
@@ -358,7 +386,7 @@ endfunction
 
 function! s:goyo_leave()
     if has("gui_running")
-        :SetNormalFont
+        :SetPixmapFont
         set nofullscreen cursorline guicursor&
     endif
 
@@ -391,8 +419,8 @@ set statusline+=%*
 
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 2
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 1
+let g:syntastic_check_on_open = 0
+let g:syntastic_check_on_wq = 0
 
 let g:syntastic_python_checkers = ['flake8']
 let g:syntastic_python_flake8_quiet_messages = {
@@ -406,13 +434,14 @@ let g:syntastic_javascript_checkers = ['eslint']
 " ------------------------------------------------------------------
 " 自定义键盘映射
 " Fast saving
-nnoremap <silent><leader>w :w<CR>
+nnoremap <silent><leader>s :w<CR>
 nnoremap <silent><leader>x :bd<CR>
 nnoremap <silent><leader>z :qa<CR>
+nnoremap <silent><leader>w <C-w>
 
 " Copy and Paste
-nnoremap <silent><leader>c "+Y
-vnoremap <silent><leader>c "+y
+nnoremap <silent><leader>y "+Y
+vnoremap <silent><leader>y "+y
 " Paste use Unite funtion <leader>v
 
 " 消除高亮搜索
@@ -457,14 +486,14 @@ noremap <silent><F3> :NERDTreeToggle<CR>
 " 定位到目录树中 :cd %:p:h
 noremap <silent><F4> :NERDTreeFind<CR>
 
-" 用关联程序打开当前文件，适用于Markdown、html等文件的预览
-noremap <silent><F5> :!open %<CR>
-
 " Format
 noremap <silent><F8> :Autoformat<CR>
 
 "用F9 进行语法检查
 noremap <silent><F9> :SyntasticCheck<CR>
+
+" Tagbar
+noremap <silent><F10> :TagbarToggle<CR>
 
 " 专注模式
 noremap <silent><F11> :Goyo<CR>
@@ -480,9 +509,6 @@ autocmd BufReadPost *
 " Remember info about open buffers on close
 set viminfo^=%
 
-" Delete trailing white space on save, useful for Python and CoffeeScript ;)
-autocmd BufWrite *.py :call DeleteTrailingWS()
-autocmd BufWrite *.coffee :call DeleteTrailingWS()
 
 " ------------------------------------------------------------------
 " 配置文件.vimrc更改后自动重新载入使设置生效
@@ -491,17 +517,8 @@ autocmd BufWrite *.coffee :call DeleteTrailingWS()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Helper functions
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-function! DeleteTrailingWS()
-    " 删除每行末尾的空格
-    exe "normal mz"
-    %s/\s\+$//ge
-    exe "normal `z"
-    " 增加一行用于取消标记位置
-    exe "normal mz"
-endfunction
-
 function! s:PreviewDotFile()
-    " 预览当前打开的dot graphic文件
+    " 预览当前打开的dot graphic文件, 使用pdf格式可以进行矢量缩放
     exe "!dot % -Tpdf -o /tmp/%:t.pdf; picview /tmp/%:t.pdf; rm /tmp/%:t.pdf"
 endfunction
 com! PreviewDotFile call s:PreviewDotFile()

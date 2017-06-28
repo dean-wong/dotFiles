@@ -50,7 +50,7 @@ ZSH_THEME="random"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git emotty battery autojump svn zsh-syntax-highlighting)
+plugins=(git emotty autojump python virtualenv zsh-syntax-highlighting)
 
 # User configuration
 
@@ -106,5 +106,6 @@ alias diff="colordiff"
 # autojump
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 
-# powerline prompt
-# [[ -z "$TMUX" ]] && source /usr/local/lib/python3.6/site-packages/powerline/bindings/zsh/powerline.zsh
+# Activate Python3 virtual environment
+# source "$WORKSPACE/env-py3/bin/activate"
+
