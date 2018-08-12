@@ -50,7 +50,7 @@ ZSH_THEME="random"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git emotty autojump python virtualenv zsh-syntax-highlighting)
+plugins=(git emoji emotty autojump iterm2 catimg python zsh-syntax-highlighting)
 
 # User configuration
 
@@ -85,6 +85,10 @@ fi
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 #
 
+# 清屏的别名
+alias clc="clear"
+alias cls="clear"
+
 # npm 淘宝镜像
 alias cnpm="export ELECTRON_MIRROR='https://npm.taobao.org/mirrors/electron/'; \
     npm --registry=https://registry.npm.taobao.org \
@@ -93,11 +97,10 @@ alias cnpm="export ELECTRON_MIRROR='https://npm.taobao.org/mirrors/electron/'; \
 # egrep 显示色彩
 alias egrep="egrep --color=auto --exclude-dir={.bzr,CSV,.git,.hg,.svn}"
 
-# 解决tree汉字显示不正确的问题
-# 同时显示目录和文件占用空间
-alias tree="tree -CN --du -h"
+# 解决tree汉字显示不正确的问题, 同时显示目录和文件占用空间
+alias tree="tree -CN --du -ah"
 
-# 设置几个常用程序的命令行快捷启动方式
+# 将SVN的文件类型修改为文本类型
 alias svn-type2txt="svn propset svn:mime-type text/plain"
 
 # 使用有色彩的，左右对比的diff工具
@@ -107,5 +110,5 @@ alias diff="colordiff"
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 
 # Activate Python3 virtual environment
-# source "$WORKSPACE/env-py3/bin/activate"
+workon env-py3
 

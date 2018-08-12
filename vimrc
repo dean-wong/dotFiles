@@ -33,7 +33,9 @@ Plugin 'dean-wong/YCM-Generator'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'fatih/vim-go'
 Plugin 'flazz/vim-colorschemes'
-Plugin 'godlygeek/tabular'
+" Plugin 'godlygeek/tabular'
+Plugin 'jwhitley/vim-matchit'
+Plugin 'junegunn/vim-easy-align'
 Plugin 'junegunn/goyo.vim'
 Plugin 'keith/swift.vim'
 Plugin 'kshenoy/vim-signature'
@@ -82,7 +84,7 @@ filetype plugin indent on    " required
 " ------------------------------------------------------------------
 " 基础配置
 set nocompatible nobackup autoread nowritebackup noswapfile hidden
-set tabstop=4 softtabstop=4 shiftwidth=4 "expandtab
+set tabstop=4 softtabstop=4 shiftwidth=4 expandtab
 set number showcmd ruler showmode showmatch cursorline
 set incsearch hlsearch ignorecase smartcase
 set autoindent smartindent
@@ -111,8 +113,9 @@ set foldmethod=syntax foldlevel=3
 
 " ------------------------------------------------------------------
 " 增强%命令的功能，可以在HTML TAG之间跳转
-let loaded_matchit = 1
-let loaded_matchparen = 1
+" let loaded_matchit = 1
+" let loaded_matchparen = 1
+" 使用插件来解决这个问题，不用内置命令了
 
 " 启用:Man命令查看各类man信息
 source $VIMRUNTIME/ftplugin/man.vim
@@ -158,11 +161,12 @@ let g:airline#extensions#tabline#buffer_nr_show =1
 " ------------------------------------------------------------------
 function! s:UseNormalFont()
     if has("gui_running")
-        set antialias guifont =PragmataProMono:h14 linespace=2
-        " set antialias guifont =Monaco\ for\ Powerline:h12 linespace=0
+		set antialias guifont =PragmataProMono:h14 linespace=2
+		" set antialias guifont =Ubuntu\ Mono\ derivative\ Powerline:h14 linespace=2
+		" set antialias guifont =Source\ Code\ Pro\ Light\ for\ Powerline:h12 linespace=1
 
         " 设置合适的中文字体
-        set guifontwide =PingFangSC-Regular "苹方
+		set guifontwide =PingFangSC-Regular "苹方
         " set guifontwide =HiraginoSansGB-W3 " 冬青黑体
     endif
 endfunction
@@ -200,7 +204,7 @@ if has("gui_running")
     "autocmd! InsertLeave * set   imdisable
     "autocmd! InsertEnter * set noimdisable
 
-    :SetPixmapFont
+    :SetNormalFont
 else
     colorscheme desertink
 
@@ -226,8 +230,9 @@ endif
 "  AutoFormat
 " ------------------------------------------------------------------
 let g:autoformat_verbosemode=1
-let g:formatdef_clang_format = '"clang-format -style=llvm"'
-let g:formatters_objcpp = ['clang_format']
+" let g:formatdef_clang_format = '"clang-format -style=file"' "使用  ~/.clang-format 文件
+" let g:formatters_objc   =['clang_format']
+let g:formatters_python =['yapf']
 
 " ------------------------------------------------------------------
 "  Dash
@@ -347,16 +352,11 @@ let g:tagbar_type_markdown = {
 "  }
 
 " ------------------------------------------------------------------
-"  Tabularize
+"  vim-easy-align
 "
-"if exists(":Tabularize")
-" 在‘=’两边加上正则表达式，防止分割 >= 和 ==
-nmap <Leader>a          :Tabularize /
-vmap <Leader>a          :Tabularize /
-nmap <silent><Leader>a= :Tabularize /[<\|>]*==*<CR>
-vmap <silent><Leader>a= :Tabularize /[<\|>]*==*<CR>
-nmap <silent><Leader>a: :Tabularize /:\zs<CR>
-vmap <silent><Leader>a: :Tabularize /:\zs<CR>
+"if exists(":easy-align")
+" nmap <leader>a			 <Plug>(EasyAlign)
+" nmap <silent><Leader>a   <Plug>(EasyAlign)
 "endif
 
 " ------------------------------------------------------------------
@@ -370,11 +370,6 @@ let g:lt_quickfix_list_toggle_map = '<leader>q'
 "
 let g:goyo_width = 85
 function! s:goyo_enter()
-    if has("gui_running")
-        :SetBigFont
-        set fullscreen nocursorline guicursor+=a:blinkon0
-    endif
-
     " 在显示行内移动光标，而不是实际行
     noremap j gj
     noremap k gk
@@ -382,19 +377,26 @@ function! s:goyo_enter()
     noremap $ g$
     "打字机模式
     "inoremap <CR> <C-o>zz<CR>
+	"
+    if has("gui_running")
+		set fullscreen
+        :SetBigFont
+        set nocursorline guicursor+=a:blinkon0
+    endif
 endfunction
 
 function! s:goyo_leave()
-    if has("gui_running")
-        :SetPixmapFont
-        set nofullscreen cursorline guicursor&
-    endif
-
     unmap j
     unmap k
     unmap ^
     unmap $
     "iunmap <CR> " 退出打字机模式
+	"
+    if has("gui_running")
+		set nofullscreen
+        :SetNormalFont
+        set cursorline guicursor&
+    endif
 endfunction
 
 autocmd! User GoyoEnter nested call <SID>goyo_enter()
@@ -429,15 +431,17 @@ let g:syntastic_python_flake8_quiet_messages = {
 
 let g:syntastic_javascript_checkers = ['eslint']
 
+let g:syntastic_matlab_checkers=['mlint']
+
 " }
 
 " ------------------------------------------------------------------
 " 自定义键盘映射
 " Fast saving
-nnoremap <silent><leader>s :w<CR>
+nnoremap <silent><leader>w :w<CR>
 nnoremap <silent><leader>x :bd<CR>
 nnoremap <silent><leader>z :qa<CR>
-nnoremap <silent><leader>w <C-w>
+" nnoremap <silent><leader>w <C-w>
 
 " Copy and Paste
 nnoremap <silent><leader>y "+Y
